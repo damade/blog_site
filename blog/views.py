@@ -1,35 +1,45 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-def index(request):
-	return HttpResponse('<div>'
-						'<h1>Hello, welcome to the index page</h1>'
-						'<div>')
+posts = [
+    {
+        'author': 'John Doe',
+        'title': 'First Blog Post',
+        'content': 'The very first blog post',
+        'date_posted': 'August 8, 2020'
+    },
+    {
+        'author': 'Jane Doe',
+        'title': 'Second Blog Post',
+        'content': 'The second blog post',
+        'date_posted': 'August 9, 2020'
+    },
+]
 
 def home(request):
-	return HttpResponse('<div>'
-						'<h1>Blog Home</h1>'
-						'<div>')
+    context = {
+        'posts': posts
+    }
+    return render(request, 'blog/home.html', context)
 
 def about(request):
-	return HttpResponse('<div>'
-						'<h1>Blog About Page</h1>'
-						'<div>')
+    return render(request, 'blog/about.html')
+
 
 def individual_posts(request):
-	# return HttpResponse("Hello, world. You're at the polls index.")
-	return HttpResponse('<h1>The Blog Post</h1>'
-						'<p1>Hi, this is where an individual post will be.</p1>')
+    # return HttpResponse("Hello, world. You're at the polls index.")
+    return HttpResponse('<h1>The Blog Post</h1>'
+                        '<p1>Hi, this is where an individual post will be.</p1>')
 
 
 def comments(request):
-	return HttpResponse('<div>'
-						'<h1>ABOUT US</h1>'
-						'<h3>'
-						'Ade.com is a website just W3 schools We are just like W3 schools <br>'
-						'We basically provide examples and prototypes for people who do not have full idea of HTML and CSS<br>'
-						'We provide introductory examples to learn, such that you can use the Inspect element option to view the source code which is basic'
-						'</h3>'
-						'</div>')  # Create your views here.
+    return HttpResponse('<div>'
+                        '<h1>ABOUT US</h1>'
+                        '<h3>'
+                        'Ade.com is a website just W3 schools We are just like W3 schools <br>'
+                        'We basically provide examples and prototypes for people who do not have full idea of HTML and CSS<br>'
+                        'We provide introductory examples to learn, such that you can use the Inspect element option to view the source code which is basic'
+                        '</h3>'
+                        '</div>')  # Create your views here.
 
 # Create your views here.
