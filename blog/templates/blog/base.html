@@ -20,24 +20,49 @@
     {% endif %}
 </head>
 <body>
-<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{% url 'blog-home' %}">Ade Blog</a>
-    <a class=" nav-item nav-link" href="{% url 'blog-home' %}">Home <span class="sr-only">(current)</span></a>
-    <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
-    <a class="nav-link nav-item" href="#">Login</a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
-            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+{% if user.is_authenticated %}
+<header class="site-header">
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{% url 'blog-home' %}">Ade Blog</a>
+        <a class=" nav-item nav-link" href="{% url 'blog-home' %}">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+        <a class="nav-link nav-item" href="{% url 'profile' %}">Profile</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+                data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-    <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-            <a class=" nav-item nav-link" href="#">Register</a>
-        </li>
-    </ul>
-</nav>
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class=" nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+{% else %}
+<header class="site-header">
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{% url 'blog-home' %}">Ade Blog</a>
+        <a class=" nav-item nav-link" href="{% url 'blog-home' %}">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+        <a class="nav-link nav-item" href="{% url 'login' %}">Login</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+                data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class=" nav-item nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+{% endif %}
 <div class="container-fluid">
     <div class="row">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -74,13 +99,29 @@
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-             {% if messages %}
-                {% for message in messages %}
-                    <div class="my-5 alert alert-{{ message.tags }}">
-                        {{ message}}
-                    </div>
-                {% endfor %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="my-5 alert alert-{{ message.tags }}">
+                {{ message}}
+            </div>
+            {% endfor %}
             {% endif %}
+            {% if user.is_authenticated %}
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Blog, Welcome {{ user.username.capitalize }}</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                        <span data-feather="calendar"></span>
+                        This week
+                    </button>
+
+                </div>
+            </div>
+            {% else %}
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Blog</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
@@ -94,8 +135,8 @@
                     </button>
 
                 </div>
-
             </div>
+            {% endif %}
             <div class="row">
                 <div class="col-md-8">
                     {% block content %}{% endblock %}

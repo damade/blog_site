@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="content-section">
+    <div class="media">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url}}">
+        <div class="media-body mx-1">
+            <h2 class="account-heading">@{{ user.username.capitalize }}</h2>
+            <h3 class="text-info">{{ user.first_name}} {{user.last_name}}</h3>
+            <h4 class="text-secondary">{{ user.email}}</h4>
+            <h6 class="text-primary">{{ user.profile.bio}}</h6>
+            <a class="btn btn-info btn-outline-secondary btn-sm active" href="{% url 'updateprofile' %}" role="button">Update
+                Profile</a>
+        </div>
+    </div>
+    <!-- FORM HERE -->
+</div>
+{% endblock content %}
