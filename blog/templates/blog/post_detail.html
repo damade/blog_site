@@ -1,0 +1,23 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+    <div class="col-auto d-none d-lg-block mx-1 my-1">
+        <img class="rounded-circle article-img" src="{{object.author.profile.image.url}}">
+    </div>
+    <div class="col p-4 d-flex flex-column position-static">
+        <strong class="d-inline-block mb-2 text-primary">
+            <a class="mx-2" href="{% url 'user-posts' object.author.username %}">{{ post.author }}</a>
+        </strong>
+        <h3 class="mb-0 article-title">{{ object.title }}</h3>
+        <div class="mb-1 text-muted">{{ object.date_posted|date:"F d, Y" }}
+        </div>
+        {% if object.author == user %}
+        <div>
+            <a class="btn btn-sm my-1 btn-secondary" role="button" href="{% url 'post-update' object.id %}">Update</a>
+            <a class="btn btn-sm my-1 btn-danger" role="button" href="{% url 'post-delete' object.id %}">Delete</a>
+        </div>
+        {%endif%}
+        <p class="card-text mb-auto article-content">{{ object.content }}.</p>
+    </div>
+</div>
+{% endblock content %}

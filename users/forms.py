@@ -7,17 +7,17 @@ from .models import Profile
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
-    firstName = forms.CharField(max_length=50,required=True,help_text='First Name Input', label="First Name")
-    lastName = forms.CharField(max_length=50,required=True,help_text='Last Name Input', label="Last Name")
+    first_name = forms.CharField(max_length=50, required=True, help_text='First Name Input', label="First Name")
+    last_name = forms.CharField(max_length=50, required=True, help_text='Last Name Input', label="Last Name")
 
     class Meta:
         model = User
-        fields = ['username','email','firstName','lastName','password1','password2']
+        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
 
     def save(self, commit=True):
         user = super(UserRegisterForm, self).save(commit=False)
-        firstName = self.cleaned_data["firstName"]
-        lastName = self.cleaned_data["lastName"]
+        firstName = self.cleaned_data["first_name"]
+        lastName = self.cleaned_data["last_name"]
         user.first_name = firstName
         user.last_name = lastName
         user.email = self.cleaned_data["email"]
@@ -33,7 +33,7 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'firstName', 'lastName']
+        fields = ['username', 'email', 'first_name', 'last_name']
 
     def save(self, commit=True):
         user = super(UserUpdateForm, self).save(commit=False)

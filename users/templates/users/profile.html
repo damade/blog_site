@@ -8,8 +8,14 @@
             <h3 class="text-info">{{ user.first_name}} {{user.last_name}}</h3>
             <h4 class="text-secondary">{{ user.email}}</h4>
             <h6 class="text-primary">{{ user.profile.bio}}</h6>
-            <a class="btn btn-info btn-outline-secondary btn-sm active" href="{% url 'updateprofile' %}" role="button">Update
-                Profile</a>
+            <div>
+                <a class="btn btn-info btn-outline-secondary btn-sm active" href="{% url 'user-update' user.id %}"
+                   role="button">Update User Information</a>
+                <a class="btn btn-info btn-outline-secondary btn-sm active" href="{% url 'profile-update' user.id %}"
+                   role="button">Update
+                    Profile</a>
+            </div>
+
         </div>
     </div>
     <!-- FORM HERE -->
